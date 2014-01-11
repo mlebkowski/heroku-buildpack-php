@@ -337,11 +337,17 @@ for include in $PHP_INCLUDES; do
 done
 
 if [ -n "$SSH_KEY" ]; then
+    status "Using custom SSK private key"
+
     mkdir -p ~/.ssh/
     chmod 700 ~/.ssh/
 
     echo "$SSH_KEY" > ~/.ssh/id_rsa
     chmod 400 ~/.ssh/id_rsa
+    
+    echo 'StrictHostKeyChecking=no' > ~/.ssh/config
+    chmod 600 ~/.ssh/config
+
 fi
 
 
