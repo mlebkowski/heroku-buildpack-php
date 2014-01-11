@@ -336,6 +336,15 @@ for include in $PHP_INCLUDES; do
     cp "$BUILD_DIR/$include" "/app/vendor/php/etc/conf.d/"
 done
 
+if [ -n "$SSH_KEY" ]; then
+    mkdir -p ~/.ssh/
+    chmod 700 ~/.ssh/
+
+    echo "$SSH_KEY" > ~/.ssh/id_rsa
+    chmod 400 ~/.ssh/id_rsa
+fi
+
+
 # Detect PHP framework
 for f in "$basedir/../frameworks/"*; do
     if "$f" detect "$BUILD_DIR"; then
