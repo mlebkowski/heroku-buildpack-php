@@ -32,20 +32,4 @@ case "$1" in
         echo "-----> Setting up Symfony2 app"
         cp "$basedir/../conf/nginx/symfony2.conf.erb" "$BUILD_DIR/conf/site.conf.erb"
         ;;
-    end)
-        BUILD_DIR="$1"
-        CACHE_DIR="$2"
-        APP_DIR="/app"
-
-        status "Warming up cache"
-        rm -rf app/cache/*
-        php app/console cache:warmup --env=prod --no-debug | indent
-
-
-        status "In-place replacement of $CACHE_DIR to $APP_DIR"
-        find $CACHE_DIR/app/cache/prod -type f -exec sed -i "s@$CACHE_DIR@$APP_DIR@g" {} \; | indent
-        grep $CACHE_DIR/app/cache/prod -r . && error "Could find some '$CACHE_DIR' :/ "
-
-        status "End"
-        ;;
 esac

@@ -435,6 +435,14 @@ for lib in $ADDITIONAL_INSTALLED_LIBS; do
     mv "$lib" "vendor/$LIB_TARGET"
 done
 
+ln -s /app/vendor/php/bin/php "$HOME/bin/"
+ln -s /app/vendor/php/bin/pecl "$HOME/bin/"
+ln -s /app/vendor/php/bin/php-config "$HOME/bin/"
+ln -s /app/vendor/php/bin/phpize "$HOME/bin/"
+ln -s /app/vendor/php/bin/pear "$HOME/bin/"
+ln -s /app/vendor/composer/bin/composer.phar "$HOME/bin/composer"
+
+
 mkdir -p "bin"
 
 cat > "bin/run" <<SH
