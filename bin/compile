@@ -127,13 +127,7 @@ function install_composer_deps() {
 
     status "Installing application dependencies with Composer"
     {
-        cd "$target"
-        php "vendor/composer/bin/composer.phar" install \
-            --prefer-dist \
-            --optimize-autoloader \
-            --no-interaction \
-            --no-dev
-        cd "$cwd"
+        php "vendor/composer/bin/composer.phar" install --no-scripts --no-interaction -o -d "$target"
     } | indent
 }
 
