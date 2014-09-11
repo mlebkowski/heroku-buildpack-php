@@ -127,7 +127,7 @@ function install_composer_deps() {
 
     status "Installing application dependencies with Composer"
     {
-        php "vendor/composer/bin/composer.phar" install --no-scripts --no-interaction -o -d "$target"
+        php "vendor/composer/bin/composer.phar" install --prefer-dist --no-scripts --no-interaction -o -d "$target"
     } | indent
 }
 
