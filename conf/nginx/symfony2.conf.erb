@@ -11,7 +11,7 @@ location / {
 
 location @rewriteapp {
     # rewrite all to app.php
-<% if ENV.has_key? "SYMFONY_ENV" and ENV['DOCUMENT_ROOT'].to_s != "prod" %>
+<% if ENV.has_key? "SYMFONY_ENV" and ENV['SYMFONY_ENV'].to_s != "prod" %>
     rewrite ^(.*)$ /app_<%= ENV['SYMFONY_ENV'] %>.php/$1 last;
 <% else %>
     rewrite ^(.*)$ /app.php/$1 last;
