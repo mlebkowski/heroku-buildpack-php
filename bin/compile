@@ -337,24 +337,25 @@ for include in $PHP_INCLUDES; do
     cp "$BUILD_DIR/$include" "/app/vendor/php/etc/conf.d/"
 done
 
-if [ -n "$SSH_KEY" ]; then
+if [ -d "$ENV_DIR" ]; then
+	for e in $(ls -1 "$ENV_DIR" | grep -F "$(jq -r '.extra["incenteev-parameters"]["env-map"] | .[]' "$BUILD_DIR/composer.json" 2>/dev/null)" || :); do
+		echo "Exporting $e var"
+		export "$e=$(cat $ENV_DIR/$e)"
+	done
+fi
+
+if [ -f "$ENV_DIR/$SSH_KEY" ]; then
     status "Using custom SSK private key"
 
     mkdir -p ~/.ssh/
     chmod 700 ~/.ssh/
 
-    echo "$SSH_KEY" > ~/.ssh/id_rsa
+    cat "$ENV_DIR/$SSH_KEY" > ~/.ssh/id_rsa
     chmod 400 ~/.ssh/id_rsa
-    
-    echo 'StrictHostKeyChecking=no' > ~/.ssh/config
+
+    ssh-keyscan -t rsa,dsa bitbucket.org github.com 2>&- | sort -u - >~/.ssh/known_hosts
     chmod 600 ~/.ssh/config
 
-fi
-
-if [ -d "$ENV_DIR" ]; then
-	for e in $(ls -1 "$ENV_DIR" | grep -F "$(jq -r '.extra["incenteev-parameters"]["env-map"] | .[]' "$BUILD_DIR/composer.json" 2>/dev/null)" || :); do
-		export "$e=$(cat $ENV_DIR/$e)"
-	done
 fi
 
 
