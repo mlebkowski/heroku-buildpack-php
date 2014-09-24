@@ -344,13 +344,13 @@ if [ -d "$ENV_DIR" ]; then
 	done
 fi
 
-if [ -f "$ENV_DIR/$SSH_KEY" ]; then
+if [ -f "$ENV_DIR/SSH_KEY" ]; then
     status "Using custom SSK private key"
 
     mkdir -p ~/.ssh/
     chmod 700 ~/.ssh/
 
-    cat "$ENV_DIR/$SSH_KEY" > ~/.ssh/id_rsa
+    cat "$ENV_DIR/SSH_KEY" > ~/.ssh/id_rsa
     chmod 400 ~/.ssh/id_rsa
 
     ssh-keyscan -t rsa,dsa bitbucket.org github.com 2>&- | sort -u - >~/.ssh/known_hosts
