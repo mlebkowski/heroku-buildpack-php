@@ -354,7 +354,6 @@ if [ -f "$ENV_DIR/SSH_KEY" ]; then
     chmod 400 ~/.ssh/id_rsa
 
     ssh-keyscan -t rsa,dsa bitbucket.org github.com 2>&- | sort -u - >~/.ssh/known_hosts
-    chmod 600 ~/.ssh/config
 
 fi
 
